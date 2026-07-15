@@ -1,0 +1,21 @@
+<%- include('./partials/nav') %>
+
+    <h1>Create a new fruit</h1>
+
+    <form action="/fruits" method="POST">
+        <!-- <label for="name">Name: </label> -->
+         Name:
+        <input type="text" id="name" name="name" />
+        <br/>
+
+        <!-- <label for="isReadyToEat">Ready to eat?</label> -->
+         Ready to eat?
+        <div class="checkbox-div">
+            <input type="checkbox" id="isReadyToEat" name="isReadyToEat"/>
+        </div>
+        <br/>
+
+        <button type="submit">Add fruit</button>
+    </form>
+</body>
+</html>
