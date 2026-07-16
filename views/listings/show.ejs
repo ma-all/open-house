@@ -31,9 +31,16 @@
     <section>
         <h2>Favorites</h2>
         <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
-        <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>" method="post">
-            <button type="submit">❤️</button>
-        </form>
+        <% if (userHasFavorited) { %>
+            <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="post">
+                <button type="submit"> ❌ </button>
+            </form>
+
+        <% } else { %>
+            <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>" method="post">
+                <button type="submit">❤️</button>
+            </form>
+        <% } %>
     </section>
 
     <section>

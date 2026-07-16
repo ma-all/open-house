@@ -69,6 +69,8 @@ app.put('/listings/:listingId', isSignedIn, listingsCtrl.updateListing)
 
 app.post('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.favorite)
 
+app.delete('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.unfavorite)
+
 // questions route
 app.post('/listings/:listingId/questions', questionsCtrl.create)
 
