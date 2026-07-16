@@ -74,20 +74,32 @@ const show = async (req, res) => {
 }
 
 const editListing = async (req, res) => {
-    let foundListing = await Listing.findById(req.params.listingId)
+    const foundListing = await Listing.findById(req.params.listingId)
     res.render('listings/edit.ejs', {
         foundListing
     })
 }
 
 const updateListing = async (req, res) => {
+    const foundListing = await Listing.findById(req.params.listingId)
+    const oldPublicId = foundListing.image?.publicId
     let listingData = {}
 
     listingData.price = req.body.price
     listingData.streetAddress = req.body.streetAddress
     listingData.city = req.body.city
     listingData.size = req.body.size
-    listingData.image = req.body.image
+    // listingData.image = req.body.image
+
+    if(req.file){
+        const uploadedImage = await uploadImage(req.file.buffer)
+        foundListing.image = {
+            url: uploadedImage.secure_url,
+            publicId: uploadedImage.public_id,
+        }
+    }
+
+    await foundListing.save()
 
     await Listing.findByIdAndUpdate(req.params.listingId, listingData)
     res.redirect(`/listings/${req.params.listingId}`)

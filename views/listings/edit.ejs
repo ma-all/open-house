@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Edit a Listing</h1>
-    <form action="/listings/<%= foundListing._id %>?_method=PUT" method="POST">
+    <form action="/listings/<%= foundListing._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
         Price:
         <input type="number" name="price" min="0" value="<%= foundListing.price %>"/>
         Street Address:
@@ -17,7 +17,7 @@
         Size:
         <input type="number" name="size" min="0" value="<%= foundListing.size %>" />
         Image:
-        <input type="text" name="image" value="<%= foundListing.image %>" />
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp" />
         
         <button type="submit">Update Listing</button>
     </form>

@@ -62,14 +62,10 @@ app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
 app.post('/listings', isSignedIn, upload.single('image'), listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
 app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
-
 app.delete('/listings/:listingId', isSignedIn, listingsCtrl.deleteListing)
-
 app.get('/listings/:listingId/edit', isSignedIn, listingsCtrl.editListing)
-app.put('/listings/:listingId', isSignedIn, listingsCtrl.updateListing)
-
+app.put('/listings/:listingId', isSignedIn, upload.single('image'), listingsCtrl.updateListing)
 app.post('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.favorite)
-
 app.delete('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.unfavorite)
 
 // questions route
@@ -78,8 +74,6 @@ app.post('/listings/:listingId/questions', questionsCtrl.create)
 app.get('/dashboard', isSignedIn, async (req, res) => {
     res.render('dashboard.ejs')
 })
-
-
 
 app.get('/*splat', (req, res) => {
     res.render('error.ejs', {
