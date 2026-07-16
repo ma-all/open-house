@@ -30,7 +30,14 @@
 
     <section>
         <h2>Favorites</h2>
-        <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
+        <% if ( foundListing.favoritedByUsers.length === 0 ) { %>
+            <p>No one liked this.</p>
+        <% } else if (foundListing.favoritedByUsers.length === 1 ) { %>
+            <p>Only one person liked this.</p>
+        <% } else { %>
+            <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
+        <% } %>
+        
         <% if (userHasFavorited) { %>
             <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>?_method=DELETE" method="post">
                 <button type="submit"> ❌ </button>

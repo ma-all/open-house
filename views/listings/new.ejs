@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Create a New Listing</h1>
-    <form action="/listings" method="POST">
+    <form action="/listings" method="POST" enctype="multipart/form-data"> 
         Price:
         <input type="number" name="price" min="0" />
         Street Address:
@@ -17,7 +17,7 @@
         Size:
         <input type="number" name="size" min="0" />
         Image:
-        <input type="text" name="image" />
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp" />
         <button type="submit">Add Listing</button>
     </form>
 </body>

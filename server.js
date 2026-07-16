@@ -8,6 +8,7 @@ const methodOverride = require("method-override")
 const morgan = require("morgan")
 const session = require('express-session')
 const { MongoStore } = require('connect-mongo')
+const upload = require('./config/multer') //acts as middleware when user hits submit (its gonna grab the picture out of the form)
 
 const isSignedIn = require('./middleware/is-signed-in')
 const passUserToView = require('./middleware/pass-user-to-view')
@@ -58,7 +59,7 @@ app.delete('/auth/sign-out', authCtrl.signOut)
 
 // LISTINGS ROUTERS
 app.get('/listings/new', isSignedIn, listingsCtrl.showNewForm)
-app.post('/listings', listingsCtrl.create)
+app.post('/listings', isSignedIn, upload.single('image'), listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
 app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
 

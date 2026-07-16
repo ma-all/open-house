@@ -12,7 +12,7 @@
         <% allListings.forEach((item) => { %>
             <a href="/listings/<%= item._id %>">
             <li>
-                    <img src="<%= item.image %>" width="200px">
+                    <img src="<%= item.image.url %>" width="200px">
                     A listing in <%= item.city %> owned by: <%= item.owner.username %>
                 </li>
             </a>
