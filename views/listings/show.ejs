@@ -13,11 +13,45 @@
     <p>House Size: <%= foundListing.size %> sq ft</p>
     <p>Price: $<%= foundListing.price %></p>
     <p>Street address: <%= foundListing.streetAddress %></p>
+    <p>City: <%= foundListing.city %></p>
 
     <% if (foundListing.owner._id.equals(user._id)) { %>
         <p>You own this!</p>
+
+        <a href="/listings/<%= foundListing._id %>/edit">Edit listing</a>
+
+        <form action="/listings/<%= foundListing._id %>?_method=DELETE" method="post">
+            <button type="submit">Delete this listing</button>
+        </form>
+
     <% } else { %>
         <p>You don't own this, <%= foundListing.owner.username %> does!</p>
     <% } %>
+
+    <section>
+        <h2>Favorites</h2>
+        <p>Favorited by <%= foundListing.favoritedByUsers.length %> people.</p>
+        <form action="/listings/<%= foundListing._id %>/favorited-by/<%= user._id %>" method="post">
+            <button type="submit">❤️</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Questions about this property? </h2>
+        <form action="/listings/<%= foundListing._id %>/questions" method="post">
+                <textarea name="text" rows="4" required></textarea>
+                <button type="submit">Ask Question</button>
+        </form>
+    </section>
+
+    <section>
+        <h3>Questions for users</h3>
+        <% foundListing.questions.forEach((item) => { %>
+           <p> <%= item.text %> </p>
+           <p>Asked by: <%= item.author.username %></p>
+        <% }) %>
+    </section>
+
 </body>
 </html>
+

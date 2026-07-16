@@ -14,6 +14,7 @@ const passUserToView = require('./middleware/pass-user-to-view')
 
 const authCtrl = require('./controllers/auth')
 const listingsCtrl = require('./controllers/listings')
+const questionsCtrl = require('./controllers/questions')
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : "3000"
@@ -61,9 +62,26 @@ app.post('/listings', listingsCtrl.create)
 app.get('/listings', listingsCtrl.index)
 app.get('/listings/:listingId', isSignedIn, listingsCtrl.show)
 
+app.delete('/listings/:listingId', isSignedIn, listingsCtrl.deleteListing)
+
+app.get('/listings/:listingId/edit', isSignedIn, listingsCtrl.editListing)
+app.put('/listings/:listingId', isSignedIn, listingsCtrl.updateListing)
+
+app.post('/listings/:listingId/favorited-by/:userId', isSignedIn, listingsCtrl.favorite)
+
+// questions route
+app.post('/listings/:listingId/questions', questionsCtrl.create)
 
 app.get('/dashboard', isSignedIn, async (req, res) => {
     res.render('dashboard.ejs')
+})
+
+
+
+app.get('/*splat', (req, res) => {
+    res.render('error.ejs', {
+        msg: 404
+    })
 })
 
 app.listen(port, () => {

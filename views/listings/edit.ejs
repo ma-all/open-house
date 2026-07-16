@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+<body>
+    <h1>Edit a Listing</h1>
+    <form action="/listings/<%= foundListing._id %>?_method=PUT" method="POST">
+        Price:
+        <input type="number" name="price" min="0" value="<%= foundListing.price %>"/>
+        Street Address:
+        <input type="text" name="streetAddress" value="<%= foundListing.streetAddress %>" />
+        City:
+        <input type="text" name="city" value="<%= foundListing.city %>" />
+        Size:
+        <input type="number" name="size" min="0" value="<%= foundListing.size %>" />
+        Image:
+        <input type="text" name="image" value="<%= foundListing.image %>" />
+        
+        <button type="submit">Update Listing</button>
+    </form>
+</body>
+</html>

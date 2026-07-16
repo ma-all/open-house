@@ -25,21 +25,56 @@ const create = async (req, res) => {
 
 const index = async (req, res) => {
     const allListings = await Listing.find().populate('owner')
-    console.log(allListings)
     res.render('listings/index.ejs', {allListings})
 }
 
 const show = async (req, res) => {
-    const foundListing = await Listing.findById(req.params.listingId).populate('owner')
-    console.log(req.session.user)
+    const foundListing = await Listing.findById(req.params.listingId).populate('owner').populate('questions.author')
     res.render('listings/show.ejs', {
         foundListing
     })
 }
 
+const editListing = async (req, res) => {
+    let foundListing = await Listing.findById(req.params.listingId)
+    res.render('listings/edit.ejs', {
+        foundListing
+    })
+}
+
+const updateListing = async (req, res) => {
+    let listingData = {}
+
+    listingData.price = req.body.price
+    listingData.streetAddress = req.body.streetAddress
+    listingData.city = req.body.city
+    listingData.size = req.body.size
+    listingData.image = req.body.image
+
+    await Listing.findByIdAndUpdate(req.params.listingId, listingData)
+    res.redirect(`/listings/${req.params.listingId}`)
+}
+
+const favorite = async (req, res) => {
+    await Listing.findByIdAndUpdate(req.params.listingId, {
+        $push: {favoritedByUsers: req.params.userId}
+    })
+    res.redirect(`/listings/${req.params.listingId}`)
+}
+
+const deleteListing = async (req, res) => {
+    const foundListing = await Listing.findById(req.params.listingId)
+    if(foundListing.owner.equals(req.session.user._id)){
+        await Listing.findByIdAndDelete(req.params.listingId)
+        res.redirect('/listings')
+    } else {
+        res.render('error,js', {
+            msg: 'You dont have permission to do that'
+        })
+    }
+    
+}
+
 module.exports = {
-    showNewForm,
-    create,
-    index,
-    show,
+    showNewForm, create, index, show, deleteListing, editListing, updateListing, favorite,
 }
