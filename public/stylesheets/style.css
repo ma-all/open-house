@@ -1,0 +1,11 @@
+body {
+    background-color: palegoldenrod;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100vw;
+}
+
+nav {
+    min-width: 100vw;
+}
